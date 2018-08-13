@@ -2,7 +2,7 @@ package com.psx.wordlistapp;
 
 import android.content.Context;
 
-import com.psx.wordlistapp.DAO.WordDAO;
+import com.psx.wordlistapp.dao.WordDAO;
 import com.psx.wordlistapp.entities.Word;
 
 import androidx.room.Database;

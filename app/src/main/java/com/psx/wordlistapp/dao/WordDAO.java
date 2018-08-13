@@ -1,4 +1,4 @@
-package com.psx.wordlistapp.DAO;
+package com.psx.wordlistapp.dao;
 
 import com.psx.wordlistapp.entities.Word;
 
