@@ -1,5 +1,6 @@
 package com.psx.wordlistapp;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import com.psx.wordlistapp.entities.Word;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
 
@@ -33,6 +33,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     public void setWords(List<Word> words) {
         this.words = words;
+        notifyDataSetChanged();
     }
 
     @Override

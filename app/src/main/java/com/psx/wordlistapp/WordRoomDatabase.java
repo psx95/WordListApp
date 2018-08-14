@@ -1,15 +1,16 @@
 package com.psx.wordlistapp;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.psx.wordlistapp.dao.WordDAO;
 import com.psx.wordlistapp.entities.Word;
 
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Word.class}, version = 1)
 public abstract class WordRoomDatabase extends RoomDatabase {
@@ -36,7 +37,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
 
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
         @Override
-        public void onOpen(SupportSQLiteDatabase db) {
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
             new PopulateDBAsync(INSTANCE).execute();
         }

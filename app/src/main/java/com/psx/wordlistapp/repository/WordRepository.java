@@ -1,6 +1,7 @@
 package com.psx.wordlistapp.repository;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.psx.wordlistapp.dao.WordDAO;
@@ -9,7 +10,6 @@ import com.psx.wordlistapp.entities.Word;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
 
 /**
  * A Repository	is a class	that	abstracts	access	to	multiple	data	sources.

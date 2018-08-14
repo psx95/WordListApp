@@ -1,14 +1,14 @@
 package com.psx.wordlistapp.ViewModel;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 
 import com.psx.wordlistapp.entities.Word;
 import com.psx.wordlistapp.repository.WordRepository;
 
 import java.util.List;
 
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 public class WordViewModel extends AndroidViewModel {
 
