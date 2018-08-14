@@ -8,15 +8,23 @@ import android.view.MenuItem;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.psx.wordlistapp.ViewModel.WordViewModel;
+import com.psx.wordlistapp.entities.Word;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    private WordViewModel wordViewModel;
+    final WordListAdapter wordListAdapter = new WordListAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +41,22 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
         recyclerView = findViewById(R.id.recyclerview);
-        final WordListAdapter wordListAdapter = new WordListAdapter();
+        setupRecyclerView();
+        addObserversForLiveData();
+    }
+
+    private void addObserversForLiveData() {
+        wordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+            @Override
+            public void onChanged(List<Word> words) {
+                wordListAdapter.setWords(words);
+            }
+        });
+    }
+
+    private void setupRecyclerView() {
         recyclerView.setAdapter(wordListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
