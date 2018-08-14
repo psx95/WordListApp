@@ -2,6 +2,7 @@ package com.psx.wordlistapp;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
@@ -10,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.psx.wordlistapp.ViewModel.WordViewModel;
 import com.psx.wordlistapp.entities.Word;
@@ -24,21 +27,22 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private WordViewModel wordViewModel;
-    final WordListAdapter wordListAdapter = new WordListAdapter();;
+    final WordListAdapter wordListAdapter = new WordListAdapter();
+    public static final int REQUEST_ADD_WORD = 1;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivityForResult(new Intent(MainActivity.this, NewWordActivity.class), REQUEST_ADD_WORD);
             }
         });
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
@@ -81,5 +85,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_WORD && resultCode == RESULT_OK) {
+            Log.d(TAG, "WORD entering");
+            Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            wordViewModel.insert(word);
+        } else {
+            Log.d(TAG, "Request Code " + requestCode + " result code " + resultCode);
+            if (data != null)
+                Log.d(TAG, "intent data " + data.toString());
+            Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -35,6 +35,7 @@ dependencies {
 
     //	Lifecycle	components
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle_version" // use kapt for Kotlin
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle_version"
+    // use kapt for Kotlin
 
 }
