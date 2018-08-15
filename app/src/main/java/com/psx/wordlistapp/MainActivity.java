@@ -4,17 +4,16 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.psx.wordlistapp.ViewModel.WordViewModel;
@@ -25,11 +24,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     RecyclerView recyclerView;
     private WordViewModel wordViewModel;
     final WordListAdapter wordListAdapter = new WordListAdapter();
     public static final int REQUEST_ADD_WORD = 1;
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private ItemTouchHelper itemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         });
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
         recyclerView = findViewById(R.id.recyclerview);
+        setupItemTouchHelper();
         setupRecyclerView();
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         addObserversForLiveData();
     }
 
@@ -102,5 +105,22 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "intent data " + data.toString());
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setupItemTouchHelper() {
+        itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Word word = wordListAdapter.getWordAtPosition(position);
+                Toast.makeText(getApplicationContext(), "Deleting " + word.getWord(), Toast.LENGTH_SHORT).show();
+                wordViewModel.deleteWord(word);
+            }
+        });
     }
 }
