@@ -12,7 +12,7 @@ import com.psx.wordlistapp.dao.WordDAO;
 import com.psx.wordlistapp.entities.Word;
 
 
-@Database(entities = {Word.class}, version = 1)
+@Database(entities = {Word.class}, version = 2)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     private static WordRoomDatabase INSTANCE;

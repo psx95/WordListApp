@@ -21,10 +21,23 @@ public class Word {
 
     @Ignore
     public Word(int id, @NonNull String word) {
+        this.id = id;
         this.word = word;
     }
 
     public String getWord() {
         return this.word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

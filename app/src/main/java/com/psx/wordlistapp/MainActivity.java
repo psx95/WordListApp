@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ADD_WORD = 1;
     private ItemTouchHelper itemTouchHelper;
 
+    private static RecyclerViewClickListener recyclerViewClickListener;
+    private static WordUpdateCallback wordUpdateCallback;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +52,37 @@ public class MainActivity extends AppCompatActivity {
         });
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
         recyclerView = findViewById(R.id.recyclerview);
+        setupRecyclerViewClickListener();
+        setupWordUpdateCallback();
         setupItemTouchHelper();
         setupRecyclerView();
         itemTouchHelper.attachToRecyclerView(recyclerView);
         addObserversForLiveData();
+    }
+
+    private void setupWordUpdateCallback() {
+        wordUpdateCallback = new WordUpdateCallback() {
+            @Override
+            public void updateWord(Word word) {
+                wordViewModel.updateWords(word);
+            }
+        };
+    }
+
+    private void showDialog(Word word) {
+        EditWordDialog editWordDialog = new EditWordDialog(MainActivity.this, word, wordUpdateCallback);
+        editWordDialog.show();
+    }
+
+    private void setupRecyclerViewClickListener() {
+        recyclerViewClickListener = new RecyclerViewClickListener() {
+            @Override
+            public void onWordClick(Word word) {
+                showDialog(word);
+                Toast.makeText(getApplicationContext(), "Updating word " + word.getWord(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        wordListAdapter.setRecyclerViewClickListener(recyclerViewClickListener);
     }
 
     private void addObserversForLiveData() {
@@ -122,5 +153,13 @@ public class MainActivity extends AppCompatActivity {
                 wordViewModel.deleteWord(word);
             }
         });
+    }
+
+    public interface RecyclerViewClickListener {
+        void onWordClick(Word word);
+    }
+
+    public interface WordUpdateCallback {
+        void updateWord(Word word);
     }
 }
