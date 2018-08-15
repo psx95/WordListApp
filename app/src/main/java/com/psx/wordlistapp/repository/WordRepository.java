@@ -32,20 +32,39 @@ public class WordRepository {
         return allWords;
     }
 
-    public void insert(Word word) {
-        new insertAsyncTask(wordDAO).execute(word);
+    public void deleteAll() {
+        new DeleteAllWordsAsyncTask(wordDAO).execute();
     }
 
-    private static class insertAsyncTask extends AsyncTask<Word, Void, Void> {
+    public void insert(Word word) {
+        new InsertAsyncTask(wordDAO).execute(word);
+    }
+
+    private static class InsertAsyncTask extends AsyncTask<Word, Void, Void> {
         private WordDAO asyncTaskDao;
 
-        insertAsyncTask(WordDAO dao) {
+        InsertAsyncTask(WordDAO dao) {
             asyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final Word... params) {
             asyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private WordDAO deleteAllTaskDao;
+
+        DeleteAllWordsAsyncTask(WordDAO wordDAO) {
+            deleteAllTaskDao = wordDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            deleteAllTaskDao.deleteAll();
             return null;
         }
     }

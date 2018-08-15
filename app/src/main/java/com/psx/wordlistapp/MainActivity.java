@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_delete_all) {
+            Toast.makeText(this, "Deleting all words from local database", Toast.LENGTH_SHORT).show();
+            wordViewModel.deleteAll();
             return true;
         }
 
