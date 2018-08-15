@@ -37,5 +37,13 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
+    <style name="dialog_button_style" parent="android:style/Widget.Material.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/colorTransparent</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>

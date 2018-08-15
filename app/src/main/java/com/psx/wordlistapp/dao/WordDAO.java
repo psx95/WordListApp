@@ -6,6 +6,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.psx.wordlistapp.entities.Word;
 
@@ -29,4 +30,7 @@ public interface WordDAO {
 
     @Delete
     void deleteWord(Word word);
+
+    @Update
+    void update(Word... words);
 }

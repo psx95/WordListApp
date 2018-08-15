@@ -5,4 +5,6 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Empty word</string>
     <string name="delete_all">Delete All Words</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_word">Update Word</string>
 </resources>
