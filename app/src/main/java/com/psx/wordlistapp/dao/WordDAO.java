@@ -11,7 +11,6 @@ import com.psx.wordlistapp.entities.Word;
 import java.util.List;
 
 
-
 @Dao
 public interface WordDAO {
 
@@ -23,4 +22,7 @@ public interface WordDAO {
 
     @Query("SELECT * FROM word_table ORDER BY word ASC")
     LiveData<List<Word>> getAllWords();
+
+    @Query("SELECT * FROM word_table LIMIT 1")
+    Word[] getAnyWord();
 }
