@@ -11,7 +11,10 @@ import android.support.annotation.NonNull;
 import com.psx.wordlistapp.dao.WordDAO;
 import com.psx.wordlistapp.entities.Word;
 
-
+/**
+ * DB Layoer on top of SQLite database. Takes care of the boilerplate code.
+ * Uses DAO to issue queries to the SQL Database.
+ */
 @Database(entities = {Word.class}, version = 2)
 public abstract class WordRoomDatabase extends RoomDatabase {
 

@@ -9,10 +9,21 @@ import com.psx.wordlistapp.repository.WordRepository;
 
 import java.util.List;
 
-
+/**
+ * Provides data to the UI.
+ * Acts as a communication center between the repository and the UI.
+ * ViewModel Instances survive the configuration changes.
+ *
+ * NOTE : Never pass context in the ViewModel Classes for it may point to an Activity instance that has been destroyed.
+ * If Context needs to be used, Use AndroidViewModel instead of ViewModel.
+ */
 public class WordViewModel extends AndroidViewModel {
 
     private WordRepository wordRepository;
+    /**
+     * LiveData - a data holder class that follows the Observer pattern, thus can be observed.
+     * Alwasys caches/holds the latest version of the data. Is Lifecycle Aware.
+     */
     private LiveData<List<Word>> allWords;
 
     public WordViewModel(Application application) {

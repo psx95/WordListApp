@@ -12,7 +12,8 @@ import com.psx.wordlistapp.entities.Word;
 
 import java.util.List;
 
-
+/**
+ * Mapping of the Sql Queries to the functions*/
 @Dao
 public interface WordDAO {
 

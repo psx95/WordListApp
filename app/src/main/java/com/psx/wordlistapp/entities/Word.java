@@ -6,6 +6,9 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+/**
+ * Describes a Database Table
+ */
 @Entity(tableName = "word_table")
 public class Word {
 

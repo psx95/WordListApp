@@ -17,6 +17,8 @@ import java.util.List;
  * but	is	a	suggested	best	practice	for	code separation	and	architecture.
  * A Repository	class handles data operations.
  * It provides a clean	API	to	the	rest of	the	app	for	app	data.
+ * <p>
+ * Maps multiple data sources such as From local storage as well as network calls made to an external API.
  */
 public class WordRepository {
     private WordDAO wordDAO;
