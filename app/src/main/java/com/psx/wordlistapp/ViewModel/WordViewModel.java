@@ -3,6 +3,8 @@ package com.psx.wordlistapp.ViewModel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 
 import com.psx.wordlistapp.entities.Word;
 import com.psx.wordlistapp.repository.WordRepository;
@@ -24,7 +26,7 @@ public class WordViewModel extends AndroidViewModel {
      * LiveData - a data holder class that follows the Observer pattern, thus can be observed.
      * Alwasys caches/holds the latest version of the data. Is Lifecycle Aware.
      */
-    private LiveData<List<Word>> allWords;
+    private LiveData<PagedList<Word>> allWords;
 
     public WordViewModel(Application application) {
         super(application);
@@ -32,7 +34,7 @@ public class WordViewModel extends AndroidViewModel {
         allWords = wordRepository.getAllWords();
     }
 
-    public LiveData<List<Word>> getAllWords() {
+    public LiveData<PagedList<Word>> getAllWords() {
         return allWords;
     }
 

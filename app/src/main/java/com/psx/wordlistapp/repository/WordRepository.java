@@ -2,6 +2,8 @@ package com.psx.wordlistapp.repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 import android.os.AsyncTask;
 
 import com.psx.wordlistapp.dao.WordDAO;
@@ -22,15 +24,15 @@ import java.util.List;
  */
 public class WordRepository {
     private WordDAO wordDAO;
-    private LiveData<List<Word>> allWords;
+    private LiveData<PagedList<Word>> allWords;
 
     public WordRepository(Application application) {
         WordRoomDatabase wordRoomDatabase = WordRoomDatabase.getDatabase(application);
         wordDAO = wordRoomDatabase.getWordDAO();
-        allWords = wordDAO.getAllWords();
+        allWords = new LivePagedListBuilder<Integer,Word>(wordDAO.getAllWords(),20).build();
     }
 
-    public LiveData<List<Word>> getAllWords() {
+    public LiveData<PagedList<Word>> getAllWords() {
         return allWords;
     }
 

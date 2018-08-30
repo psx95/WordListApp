@@ -1,6 +1,8 @@
 package com.psx.wordlistapp.dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
+import android.arch.paging.LivePagedListBuilder;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -24,7 +26,7 @@ public interface WordDAO {
     void deleteAll();
 
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    LiveData<List<Word>> getAllWords();
+    DataSource.Factory<Integer, Word> getAllWords();
 
     @Query("SELECT * FROM word_table LIMIT 1")
     Word[] getAnyWord();

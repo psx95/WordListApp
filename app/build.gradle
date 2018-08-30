@@ -36,6 +36,8 @@ dependencies {
     //	Lifecycle	components
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle_version"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle_version"
+
+    implementation "android.arch.paging:runtime:$rootProject.paging_version"
     // use kapt for Kotlin
 
 }

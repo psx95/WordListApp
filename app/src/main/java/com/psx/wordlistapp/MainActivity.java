@@ -2,8 +2,10 @@ package com.psx.wordlistapp;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addObserversForLiveData() {
-        wordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+        wordViewModel.getAllWords().observe(this, new Observer<PagedList<Word>>() {
             @Override
-            public void onChanged(List<Word> words) {
-                wordListAdapter.setWords(words);
+            public void onChanged(@Nullable PagedList<Word> words) {
+                wordListAdapter.submitList(words);
             }
         });
     }

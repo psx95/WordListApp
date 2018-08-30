@@ -1,6 +1,8 @@
 package com.psx.wordlistapp;
 
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,14 @@ import com.psx.wordlistapp.entities.Word;
 import java.util.List;
 
 
-public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
+public class WordListAdapter extends PagedListAdapter<Word, WordListAdapter.WordViewHolder> {
 
     private List<Word> words;
     private MainActivity.RecyclerViewClickListener recyclerViewClickListener;
+
+    WordListAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -70,4 +76,16 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             wordItemView = itemView.findViewById(R.id.textView);
         }
     }
+
+    static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK = new DiffUtil.ItemCallback<Word>() {
+        @Override
+        public boolean areItemsTheSame(Word oldItem, Word newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(Word oldItem, Word newItem) {
+            return oldItem.getWord().equals(newItem.getWord());
+        }
+    };
 }
