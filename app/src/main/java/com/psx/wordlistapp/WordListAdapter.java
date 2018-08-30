@@ -1,7 +1,10 @@
 package com.psx.wordlistapp;
 
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,14 @@ import com.psx.wordlistapp.entities.Word;
 import java.util.List;
 
 
-public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
+public class WordListAdapter extends PagedListAdapter<Word, WordListAdapter.WordViewHolder> {
 
     private List<Word> words;
     private MainActivity.RecyclerViewClickListener recyclerViewClickListener;
+
+    WordListAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -55,10 +62,13 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     @Override
     public int getItemCount() {
-        if (words != null)
+        if (words != null) {
+            Log.d("TAG", "words not null, Size " + words.size());
             return words.size();
-        else
+        } else {
+            Log.i("TAG", "words is null in the adapter, size 0.");
             return 0;
+        }
     }
 
     class WordViewHolder extends RecyclerView.ViewHolder {
@@ -70,4 +80,18 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             wordItemView = itemView.findViewById(R.id.textView);
         }
     }
+
+    private static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK = new DiffUtil.ItemCallback<Word>() {
+        @Override
+        public boolean areItemsTheSame(Word oldItem, Word newItem) {
+            Log.d("TAG", (oldItem.getId() == newItem.getId()) + "");
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(Word oldItem, Word newItem) {
+            Log.d("TAG", "old word " + oldItem.getWord() + " new word " + newItem.getWord());
+            return oldItem.getWord().equals(newItem.getWord());
+        }
+    };
 }

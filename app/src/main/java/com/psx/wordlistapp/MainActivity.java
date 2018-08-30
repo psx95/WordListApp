@@ -2,8 +2,10 @@ package com.psx.wordlistapp;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+        addObserversForLiveData();
         recyclerView = findViewById(R.id.recyclerview);
         setupRecyclerViewClickListener();
         setupWordUpdateCallback();
         setupItemTouchHelper();
         setupRecyclerView();
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        addObserversForLiveData();
     }
 
     private void setupWordUpdateCallback() {
@@ -86,17 +88,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addObserversForLiveData() {
-        wordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+        wordViewModel.allWords.observe(this, new Observer<PagedList<Word>>() {
             @Override
-            public void onChanged(List<Word> words) {
+            public void onChanged(@Nullable PagedList<Word> words) {
+                Log.d(TAG, "words are " + words);
                 wordListAdapter.setWords(words);
             }
         });
     }
 
     private void setupRecyclerView() {
-        recyclerView.setAdapter(wordListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(wordListAdapter);
     }
 
     @Override
