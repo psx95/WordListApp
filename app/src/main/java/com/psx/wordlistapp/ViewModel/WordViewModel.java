@@ -26,7 +26,7 @@ public class WordViewModel extends AndroidViewModel {
      * LiveData - a data holder class that follows the Observer pattern, thus can be observed.
      * Alwasys caches/holds the latest version of the data. Is Lifecycle Aware.
      */
-    private LiveData<PagedList<Word>> allWords;
+    public LiveData<PagedList<Word>> allWords;
 
     public WordViewModel(Application application) {
         super(application);

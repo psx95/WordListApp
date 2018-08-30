@@ -29,7 +29,7 @@ public class WordRepository {
     public WordRepository(Application application) {
         WordRoomDatabase wordRoomDatabase = WordRoomDatabase.getDatabase(application);
         wordDAO = wordRoomDatabase.getWordDAO();
-        allWords = new LivePagedListBuilder<Integer,Word>(wordDAO.getAllWords(),20).build();
+        allWords = new LivePagedListBuilder<>(wordDAO.getAllWords(), 6).build();
     }
 
     public LiveData<PagedList<Word>> getAllWords() {
@@ -44,7 +44,8 @@ public class WordRepository {
         new DeleteWordAsyncTask(wordDAO).execute(word);
     }
 
-    public void insert(Word word) {
+    public void insert(Word word)
+    {
         new InsertAsyncTask(wordDAO).execute(word);
     }
 

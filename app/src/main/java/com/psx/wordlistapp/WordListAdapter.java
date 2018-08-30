@@ -4,6 +4,7 @@ import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,10 +62,13 @@ public class WordListAdapter extends PagedListAdapter<Word, WordListAdapter.Word
 
     @Override
     public int getItemCount() {
-        if (words != null)
+        if (words != null) {
+            Log.d("TAG", "words not null, Size " + words.size());
             return words.size();
-        else
+        } else {
+            Log.i("TAG", "words is null in the adapter, size 0.");
             return 0;
+        }
     }
 
     class WordViewHolder extends RecyclerView.ViewHolder {
@@ -77,14 +81,16 @@ public class WordListAdapter extends PagedListAdapter<Word, WordListAdapter.Word
         }
     }
 
-    static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK = new DiffUtil.ItemCallback<Word>() {
+    private static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK = new DiffUtil.ItemCallback<Word>() {
         @Override
         public boolean areItemsTheSame(Word oldItem, Word newItem) {
+            Log.d("TAG", (oldItem.getId() == newItem.getId()) + "");
             return oldItem.getId() == newItem.getId();
         }
 
         @Override
         public boolean areContentsTheSame(Word oldItem, Word newItem) {
+            Log.d("TAG", "old word " + oldItem.getWord() + " new word " + newItem.getWord());
             return oldItem.getWord().equals(newItem.getWord());
         }
     };

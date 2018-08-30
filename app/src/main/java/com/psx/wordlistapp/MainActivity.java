@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+        addObserversForLiveData();
         recyclerView = findViewById(R.id.recyclerview);
         setupRecyclerViewClickListener();
         setupWordUpdateCallback();
         setupItemTouchHelper();
         setupRecyclerView();
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        addObserversForLiveData();
     }
 
     private void setupWordUpdateCallback() {
@@ -88,17 +88,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addObserversForLiveData() {
-        wordViewModel.getAllWords().observe(this, new Observer<PagedList<Word>>() {
+        wordViewModel.allWords.observe(this, new Observer<PagedList<Word>>() {
             @Override
             public void onChanged(@Nullable PagedList<Word> words) {
-                wordListAdapter.submitList(words);
+                Log.d(TAG, "words are " + words);
+                wordListAdapter.setWords(words);
             }
         });
     }
 
     private void setupRecyclerView() {
-        recyclerView.setAdapter(wordListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(wordListAdapter);
     }
 
     @Override
